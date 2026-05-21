@@ -1,0 +1,497 @@
+# You will need to have PlaceholderAPI installed for the placeholders to work. You can download it from https://www.spigotmc.org/resources/placeholderapi.6245/
+# You will also need to have the PlaceholderAPI expansion for Skript, which can be installed using the command /papi ecloud download skript in-game.
+
+# Anything which is a variable can be changed to fit your server's needs, such as the name of the currency or the items in the shop.
+# If you use this code on your minecraft server, please consider giving credit to the original creator, which is me, as it took a lot of time and effort to create this code. Thank you.
+
+placeholderapi placeholder with the prefix "<Your World Name>":
+    if the identifier is "<Your Currency Name>":
+        set the result to {<Your Currency Name>.%player%}
+        if {<Your Currency Name>.%player%} is not set:
+            set {<Your Currency Name>.%player%} to 0
+
+# ------------------------------------------------------------------------------------------------------------------------------------
+command /shop:
+    trigger:
+        open chest inventory with 3 rows named "&aSelect Shop" to player
+        set slot 12 of player's open inventory to cobweb named "&b&lItems"
+        set slot 14 of player's open inventory to bow named "&5&l&oMore Weapons"
+
+# You can change the items in the shop and their prices by editing the code below. Just make sure to keep the structure of the code the same, otherwise it may not work properly.
+# Anything you see surrounded by {} is a variable and can be changed to fit your server's needs, just ensure to change the variable where ever it is located in the code.
+
+on inventory click:
+    if name of player's open inventory is "&aSelect Shop":
+        cancel event
+        if clicked slot is 12:
+            open chest inventory with 5 rows named "&bItems" to player
+            set slot 0 of player's open inventory to 4 cobweb with lore "&eᴄᴏsᴛ: &c750 &7Rubies" and "&5&oWebs disappear after 5 seconds!"
+            set slot 1 of player's open inventory to 8 golden apple with lore "&eᴄᴏsᴛ: &c248 &7Rubies"
+            set slot 2 of player's open inventory to splash potion of instant health with lore "&eᴄᴏsᴛ: &c3,000 &7Rubies"
+            set slot 3 of player's open inventory to 16 arrow with lore "&eᴄᴏsᴛ: &c100 &7Rubies"
+            set slot 4 of player's open inventory to fishing rod with lore "&eᴄᴏsᴛ: &c5,000 &7Rubies"
+            set slot 5 of player's open inventory to bow with lore "&eᴄᴏsᴛ: &c3,000 &7Rubies"
+            set slot 6 of player's open inventory to shield with lore "&eᴄᴏsᴛ: &c500 &7Rubies" and "&c- &7ʙʀᴇᴀᴋᴀʙʟᴇ!"
+            set slot 7 of player's open inventory to netherite spear with lore "&eᴄᴏsᴛ: &c30,000 &7Rubies" and "&c- &7ʟᴜɴɢᴇ &cɪ" and "&c- &7ᴜɴʙʀᴇᴀᴋɪɴɢ &cɪ" and "&c- &7ʙʀᴇᴀᴋᴀʙʟᴇ!"
+            set slot 8 of player's open inventory to 16 golden carrot with lore "&eᴄᴏsᴛ: &c480 &&Rubies"
+
+# This part of the code is for the "More Weapons" shop, you can change the items and their prices by editing the code below, just make sure to keep the structure of the code the same, otherwise it may not work properly.
+
+        if clicked slot is 14:
+            open chest inventory with 3 rows named "&5More Items" to player
+            set slot 11 of player's open inventory to turtle helmet named "&7Tier &a&l1 &7Turtle Shell" with lore "&eᴄᴏsᴛ: &c80,000 &7Rubies" and " " and "&c- &7ᴘʀᴏᴛᴇᴄᴛɪᴏɴ &cɪɪɪ" and "&c- &7ᴛʜᴏʀɴs &cɪ"
+            set slot 12 of player's open inventory to netherite sword named "&7Tier &5&l5 &7Sword Upgrade" with lore "&eᴄᴏsᴛ: &c75,000 &7Rubies" and " " and "&c- &7sʜᴀʀᴘɴᴇss &cɪɪ"
+            set slot 13 of player's open inventory to netherite axe named "&7Tier &5&l5 &7Axe Upgrade" with lore "&eᴄᴏsᴛ: &c50,000 &7Rubies" and " " and "&c- &7sʜᴀʀᴘɴᴇss &cɪɪ"
+            set slot 14 of player's open inventory to crossbow named "&7Tier &f&l1 &7Crossbow" with lore "&eᴄᴏsᴛ: &c45,000 &7Rubies" and " " and "&c- &7ᴏ̨ᴜɪᴄᴋᴄʜᴀʀɢᴇ &cɪɪ" and "&c- &7ᴘɪᴇʀᴄɪɴɢ &cɪ"
+            set slot 15 of player's open inventory to shield named "&7Unbreakable Shield" with lore "&eᴄᴏsᴛ: &c15,000 &7Rubies" and "&c- &7ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ!"
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Once again, Anything you see surrounded by {} is a variable and can be changed to fit your server's needs, just ensure to change the variable where ever it is located in the code.
+# Anywhere where is states "Rubies" can be changed to your server's currency, just ensure to change the variable where ever it is located in the code.
+# The items being given can also be changed to fit your server's needs, just ensure to keep the structure of the code the same, otherwise it may not work properly.
+
+# Netherite Sword Upgrade
+on inventory click:
+    if name of player's open inventory contains "&5More Items":
+        cancel event
+        if clicked slot is 12:
+            set {_sword1buy} to chest inventory with 5 rows named "&7Buy &7Sword &5Upgrade?"
+            open {_sword1buy} to player
+            set slot 13 of {_sword1buy} to netherite sword named "&7Buy &7Sword &5Upgrade?" with lore "&c- &7Sharpness &c2"
+            set slot 30 of {_sword1buy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_sword1buy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &7Sword &5Upgrade?":
+        cancel event
+
+        if clicked slot is 30:
+            close player's inventory
+
+# Anywhere where it states {rubies.%player%} can be changed to your server's currency, and replaced by the variable in line 3, just ensure to change the variable where ever it is located in the code.
+
+        if clicked slot is 32:
+            if {rubies.%player%} >= 75000:
+                remove 75000 from {rubies.%player%}
+                give player unbreakable netherite sword of sharpness 2 named "&7Tier &5&l5 &7Sword Upgrade"
+                send "&aPurchase Successful" to player
+            else:
+                send "&cYou do not have enough rubies to purchase this."
+                close player's inventory
+
+# --------------------------------------------------------------------------------------------------------------------
+
+# Netherite Axe Upgrade
+on inventory click:
+    if name of player's open inventory contains "&5More Items":
+        cancel event
+        if clicked slot is 13:
+            set {_axe1buy} to chest inventory with 5 rows named "&7Buy &7Axe &5Upgrade?"
+            open {_axe1buy} to player
+            set slot 13 of {_axe1buy} to netherite axe named "&7Buy &7Axe &5Upgrade?" with lore "&c- &7Sharpness &c2"
+            set slot 30 of {_axe1buy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_axe1buy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &7Axe &5Upgrade?":
+        cancel event
+
+        if clicked slot is 30:
+            close player's inventory
+
+        if clicked slot is 32:
+            if {rubies.%player%} >= 50000:
+                remove 50000 from {rubies.%player%}
+                give player unbreakable netherite axe of sharpness 2 named "&7Tier &5&l5 &7Axe Upgrade"
+                send "&aPurchase Successful" to player
+            else:
+                send "&cYou do not have enough rubies to purchase this."
+                close player's inventory
+
+# --------------------------------------------------------------------------------------------------------------------
+
+# Crossbow
+on inventory click:
+    if name of event-inventory contains "&5More Items":
+        cancel event
+        if clicked slot is 14:
+            set {_crossbuy} to chest inventory with 5 rows named "&7Buy &cCrossbow?"
+            open {_crossbuy} to player
+            set slot 13 of {_crossbuy} to crossbow named "&7Buy &fCrossbow?" with lore "&c- &7ᴏ̨ᴜɪᴄᴋ ᴄʜᴀʀɢᴇ &cɪɪ" and "&c- &7ᴘɪᴇʀᴄɪɴɢ ɪ!"
+            set slot 30 of {_crossbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_crossbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &cCrossbow?":
+        cancel event
+
+        if clicked slot is 30:
+            close player's inventory
+
+        if clicked slot is 32:
+            if {rubies.%player%} >= 45000:
+                remove 45000 from {rubies.%player%}
+                give player unbreakable crossbow of quick charge 2 and piercing 1 named "&7Tier &f&l1 &7Crossbow"
+                send "&aPurchase Successful" to player
+            else:
+                send "&cYou do not have enough rubies to purchase this."
+                close player's inventory
+
+# --------------------------------------------------------------------------------------------------------------------
+
+# Turtle shell
+on inventory click:
+    if name of event-inventory contains "&5More Items":
+        cancel event
+        if clicked slot is 11:
+            set {_turtbuy} to chest inventory with 5 rows named "&7Buy &cTurtle Shell?"
+            open {_turtbuy} to player
+            set slot 13 of {_turtbuy} to turtle helmet named "&7Buy &fTurtle Shell?" with lore "&c- &7ᴘʀᴏᴛᴇᴄᴛɪᴏɴ &cɪɪɪ" and "&c- &7ᴛʜᴏʀɴs ɪ!"
+            set slot 30 of {_turtbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_turtbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &cTurtle Shell?":
+        cancel event
+
+        if clicked slot is 30:
+            close player's inventory
+
+        if clicked slot is 32:
+            if {rubies.%player%} >= 80000:
+                remove 80000 from {rubies.%player%}
+                give player unbreakable turtle helmet of protection 3 and thorns 1 named "&7Tier &f&l1 &7Turtle Shell"
+                send "&aPurchase Successful" to player
+            else:
+                send "&cYou do not have enough rubies to purchase this."
+                close player's inventory
+
+# --------------------------------------------------------------------------------------------------------------------
+
+# Unbreakable Shield
+on inventory click:
+    if name of event-inventory contains "&5More Items":
+        cancel event
+        if clicked slot is 15:
+            set {_ushieldbuy} to chest inventory with 5 rows named "&7Buy &cShield?"
+            open {_ushieldbuy} to player
+            set slot 13 of {_ushieldbuy} to shield named "&7Buy &fShield?" with lore "&c- &7ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ"
+            set slot 30 of {_ushieldbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_ushieldbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &cShield?":
+        cancel event
+
+        if clicked slot is 30:
+            close player's inventory
+
+        if clicked slot is 32:
+            if {rubies.%player%} >= 15000:
+                remove 15000 from {rubies.%player%}
+                give player unbreakable shield named "&7ᴜɴʙʀᴇᴀᴋᴀʙʟᴇ &7Shield"
+                send "&aPurchase Successful" to player
+            else:
+                send "&cYou do not have enough rubies to purchase this."
+                close player's inventory
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Cobwebs
+on inventory click:
+    if name of player's open inventory contains "&bItems":
+        cancel event
+        if clicked slot is 0:
+            set {_webbuy} to chest inventory with 5 rows named "&7Buy &fCobwebs"
+            open {_webbuy} to player
+            set slot 13 of {_webbuy} to 16 cobweb named "&7Buy &a8x &fCobwebs?"
+            set slot 30 of {_webbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_webbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &fCobwebs":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &fCobwebs":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 750:
+                remove 750 from {rubies.%player%}
+                give player 4 cobweb
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+# ------------------------------------------------------------------------
+
+# Golden Apples
+on inventory click:
+    if name of player's open inventory contains "&bItems":
+        cancel event
+        if clicked slot is 1:
+            set {_gapbuy} to chest inventory with 5 rows named "&7Buy &6Golden Apples"
+            open {_gapbuy} to player
+            set slot 13 of {_gapbuy} to golden apple named "&7Buy &a8x &6Golden Apples?"
+            set slot 30 of {_gapbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_gapbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &6Golden Apples":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &6Golden Apples":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 248:
+                remove 248 from {rubies.%player%}
+                give player 8 golden apples
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+# ------------------------------------------------------------------------
+
+# Splash Potion of instant health
+on inventory click:
+    if name of player's current inventory contains "&bItems":
+        if clicked slot is 2:
+            set {_IHbuy} to chest inventory with 5 rows named "&7Buy &a1&7x &cInstant Health?"
+            set slot 13 of {_IHbuy} to splash potion of instant health named "&7Buy &a1&7x &cInstant Health?"
+            set slot 30 of {_IHbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_IHbuy} to lime stained glass pane named "&aConfirm"
+            open {_IHbuy} to player
+            cancel event
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &a1&7x &cInstant Health?":
+        cancel event
+        if clicked slot is 30:
+            cancel event
+            close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &a1&7x &cInstant Health?":
+        cancel event
+
+        if clicked slot is 32:
+            cancel event
+
+            if {rubies.%player%} >= 5000:
+                remove 5000 from {rubies.%player%}
+                give player splash potion of instant health
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this" to player
+                close player's inventory
+
+# ------------------------------------------------------------------------
+
+# Arrows
+on inventory click:
+    if name of player's open inventory contains "&bItems":
+        cancel event
+        if clicked slot is 3:
+            set {_arrowbuy} to chest inventory with 5 rows named "&7Buy &fArrows"
+            open {_arrowbuy} to player
+            set slot 13 of {_arrowbuy} to 16 arrow named "&7Buy &a16&7x &fArrows?"
+            set slot 30 of {_arrowbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_arrowbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &fArrows":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &fArrows":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 100:
+                remove 100 from {rubies.%player%}
+                give player 16 arrow
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+#------------------------------------------------------------------------
+
+# Fishing Rod
+on inventory click:
+    if name of player's open inventory contains "&bItems":
+        cancel event
+        if clicked slot is 4:
+            set {_rodbuy} to chest inventory with 5 rows named "&7Buy &fFishing Rod"
+            open {_rodbuy} to player
+            set slot 13 of {_rodbuy} to fishing rod named "&7Buy &fFishing Rod?"
+            set slot 30 of {_rodbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_rodbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &fFishing Rod":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &fFishing Rod":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 7500:
+                remove 7500 from {rubies.%player%}
+                give player fishing rod
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+#------------------------------------------------------------------------
+
+# Bow
+on inventory click:
+    if name of player's open inventory contains "&bItems":
+        cancel event
+        if clicked slot is 5:
+            set {_bowbuy} to chest inventory with 5 rows named "&7Buy &fBow"
+            open {_bowbuy} to player
+            set slot 13 of {_bowbuy} to bow named "&7Buy &fBow?"
+            set slot 30 of {_bowbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_bowbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &fBow":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &fBow":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 5000:
+                remove 5000 from {rubies.%player%}
+                give player bow
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+#------------------------------------------------------------------------
+
+# Shield
+on inventory click:
+    if name of player's open inventory contains "&bItems":
+        cancel event
+        if clicked slot is 6:
+            set {_shieldbuy} to chest inventory with 5 rows named "&7Buy &aShield"
+            open {_shieldbuy} to player
+            set slot 13 of {_shieldbuy} to shield named "&7Buy &aShield?"
+            set slot 30 of {_shieldbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_shieldbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &aShield":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &aShield":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 1000:
+                remove 1000 from {rubies.%player%}
+                give player shield
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Netherite Spear
+on inventory click:
+    if name of player's open inventory is "&bItems":
+        cancel event
+        if clicked slot is 7:
+            set {_spearbuy} to chest inventory with 5 rows named "&7Buy &5&lNetherite Spear?"
+            open {_spearbuy} to player
+            set slot 13 of {_spearbuy} to wooden spear named "Buy &5&lNetherite Spear?"
+            set slot 30 of {_spearbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_spearbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &5&lNetherite Spear?":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &5&lNetherite Spear?":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 30000:
+                remove 30000 from {rubies.%player%}
+                give player netherite spear of lunge 1 and unbreaking 1
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Golden Carrots
+on inventory click:
+    if name of player's open inventory is "&bItems":
+        cancel event
+        if clicked slot is 8:
+            set {_carrotbuy} to chest inventory with 5 rows named "&7Buy &6&lGolden Carrots?"
+            open {_carrotbuy} to player
+            set slot 13 of {_carrotbuy} to 16 golden carrot named "&7Buy &6&lGolden Carrots?"
+            set slot 30 of {_carrotbuy} to red stained glass pane named "&cCancel"
+            set slot 32 of {_carrotbuy} to lime stained glass pane named "&aConfirm"
+
+on inventory click:
+      if name of event-inventory contains "&7Buy &6&lGolden Carrots?":
+            if clicked slot is 30:
+                  close player's inventory
+
+on inventory click:
+    if name of event-inventory contains "&7Buy &6&lGolden Carrots?":
+        cancel event
+
+        if clicked slot is 32:
+
+            if {rubies.%player%} >= 480:
+                remove 480 from {rubies.%player%}
+                give player 16 golden carrot
+                send "&aPurchase Successful" to player
+
+            else:
+                send "&cYou do not have enough rubies to purchase this." to player
+                close player's inventory
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
